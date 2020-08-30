@@ -1,6 +1,6 @@
-import UserModel, { USER_TYPES } from "../models/User.js";
 import { validateCreateUser } from "../validation/createUser.js";
 import status from "../utils/status.js";
+import User from "../models/User.js";
 
 export default {
   onTestRoute: async (req, res) => {
@@ -14,5 +14,8 @@ export default {
     if (!isValid) {
       return res.status(status.BAD_REQUEST).json(errors);
     }
+    const { name, email, password } = req.body;
+
+    const user = await User.createUser(name, email, password);
   },
 };
